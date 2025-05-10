@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online tool to extract text from images quickly. Convert images to editable text with our OCR technology. Works on mobile and desktop.">
+    <meta name="keywords" content="image to text, OCR, text extractor, extract text from image, online tool">
+    <meta name="author" content="Multi-Tool Website">
+    <title>Fast Image to Text Extractor | Multi-Tool Website</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #1e90ff;
+            --secondary-color: #ffffff;
+            --accent-color: #0077cc;
+            --text-color: #333333;
+            --light-gray: #f5f5f5;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ad-container {
+            background-color: var(--light-gray);
+            padding: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .tool-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .upload-section, .preview-section, .result-section {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e0e0e0;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            background-color: rgba(30, 144, 255, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 400px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+
+        .text-result {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+            background-color: var(--light-gray);
+        }
+
+        .copy-btn {
+            background-color: #4CAF50;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            background-color: #3e8e41;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .tool-container {
+                gap: 20px;
+            }
+            
+            .upload-section, .preview-section, .result-section {
+                padding: 20px 15px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .upload-area {
+                padding: 30px 15px;
+            }
+            
+            .upload-area i {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Image to Text Extractor</h1>
+            <p>Quickly extract text from any image with our free online tool</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="ad-container">
+            <!-- AdSense Header Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="tool-container">
+            <section class="upload-section">
+                <h2>Upload Your Image</h2>
+                <p>Drag & drop an image file or click to browse</p>
+                <div id="uploadArea" class="upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Select or drag an image file here</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                </div>
+                <button id="extractBtn" class="btn" disabled>Extract Text</button>
+            </section>
+
+            <div class="ad-container">
+                <!-- AdSense Mid-Content Ad -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                     data-ad-slot="YOUR_AD_SLOT_ID"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <section class="preview-section">
+                <h2>Image Preview</h2>
+                <div id="imagePreviewContainer">
+                    <p>Your uploaded image will appear here</p>
+                    <img id="imagePreview" class="image-preview" style="display: none;">
+                </div>
+            </section>
+
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p>Extracting text from image...</p>
+            </div>
+
+            <section class="result-section">
+                <h2>Extracted Text</h2>
+                <textarea id="textResult" class="text-result" readonly placeholder="Extracted text will appear here..."></textarea>
+                <button id="copyBtn" class="btn copy-btn" disabled><i class="fas fa-copy"></i> Copy Text</button>
+                <button id="clearBtn" class="btn" style="background-color: #f44336;"><i class="fas fa-trash-alt"></i> Clear All</button>
+            </section>
+        </div>
+
+        <div class="ad-container">
+            <!-- AdSense Footer Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Multi-Tool Website. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const imagePreview = document.getElementById('imagePreview');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const extractBtn = document.getElementById('extractBtn');
+            const textResult = document.getElementById('textResult');
+            const copyBtn = document.getElementById('copyBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            let currentFile = null;
+
+            // Handle drag and drop
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = 'rgba(30, 144, 255, 0.1)';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.backgroundColor = '';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = '';
+                if (e.dataTransfer.files.length) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            // Handle click to browse
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length) {
+                    handleFile(fileInput.files[0]);
+                }
+            });
+
+            // Handle file processing
+            function handleFile(file) {
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file (JPEG, PNG, etc.)');
+                    return;
+                }
+
+                currentFile = file;
+                
+                // Display preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    imagePreviewContainer.querySelector('p').style.display = 'none';
+                    extractBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            // Extract text from image
+            extractBtn.addEventListener('click', async () => {
+                if (!currentFile) return;
+
+                loadingIndicator.style.display = 'block';
+                textResult.value = '';
+                extractBtn.disabled = true;
+
+                try {
+                    const { data: { text } } = await Tesseract.recognize(
+                        currentFile,
+                        'eng',
+                        { logger: m => console.log(m) }
+                    );
+
+                    textResult.value = text.trim();
+                    copyBtn.disabled = false;
+                } catch (error) {
+                    console.error('Error during OCR:', error);
+                    textResult.value = 'Error extracting text. Please try another image.';
+                } finally {
+                    loadingIndicator.style.display = 'none';
+                    extractBtn.disabled = false;
+                }
+            });
+
+            // Copy text to clipboard
+            copyBtn.addEventListener('click', () => {
+                textResult.select();
+                document.execCommand('copy');
+                
+                // Change button text temporarily
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 2000);
+            });
+
+            // Clear all
+            clearBtn.addEventListener('click', () => {
+                currentFile = null;
+                fileInput.value = '';
+                imagePreview.src = '';
+                imagePreview.style.display = 'none';
+                imagePreviewContainer.querySelector('p').style.display = 'block';
+                textResult.value = '';
+                extractBtn.disabled = true;
+                copyBtn.disabled = true;
+            });
+
+            // Initialize AdSense
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        });
+    </script>
+</body>
+</html>
