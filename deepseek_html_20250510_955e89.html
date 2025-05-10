@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free online tool to rotate and flip images. Easily adjust image orientation, download edited images instantly.">
+  <meta name="keywords" content="image rotator, image flipper, photo editor, rotate image, flip image, online image tool">
+  <meta name="author" content="Image Tools">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yourwebsite.com/image-rotator" />
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="Free Online Image Rotator & Flipper Tool">
+  <meta property="og:description" content="Rotate and flip images easily with our free online tool. No registration required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourwebsite.com/image-rotator">
+  <meta property="og:image" content="https://yourwebsite.com/images/image-rotator-preview.jpg">
+  
+  <title>Free Online Image Rotator & Flipper Tool | Edit Photos Instantly</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --primary-hover: #0056b3;
+      --secondary-color: #6c757d;
+      --light-gray: #f8f9fa;
+      --border-color: #dee2e6;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    
+    .description {
+      color: var(--secondary-color);
+      margin-bottom: 25px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .upload-section {
+      margin: 25px 0;
+      padding: 20px;
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      background-color: var(--light-gray);
+      transition: all 0.3s ease;
+    }
+    
+    .upload-section:hover {
+      border-color: var(--primary-color);
+    }
+
+    .controls {
+      margin: 25px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      cursor: pointer;
+      border-radius: 5px;
+      flex: 1 1 40%;
+      max-width: 180px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+    
+    button:disabled {
+      background-color: var(--secondary-color);
+      cursor: not-allowed;
+    }
+
+    .preview-container {
+      margin: 30px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .preview {
+      max-height: 400px;
+      overflow: auto;
+      border: 1px solid var(--border-color);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background-color: var(--light-gray);
+    }
+
+    #image-preview {
+      max-width: 100%;
+      max-height: 380px;
+      transition: transform 0.3s ease;
+      display: none; /* Initially hidden */
+    }
+    
+    .no-image {
+      color: var(--secondary-color);
+      font-style: italic;
+    }
+
+    .download {
+      margin-top: 25px;
+    }
+    
+    /* Ad containers */
+    .ad-container {
+      margin: 25px 0;
+      padding: 15px;
+      background-color: var(--light-gray);
+      border-radius: 8px;
+      min-height: 90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .ad-label {
+      font-size: 12px;
+      color: var(--secondary-color);
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      button {
+        width: 100%;
+        max-width: none;
+      }
+      
+      .ad-container {
+        margin: 15px 0;
+      }
+    }
+    
+    /* Loading spinner */
+    .spinner {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      border: 4px solid rgba(0, 123, 255, 0.2);
+      border-radius: 50%;
+      border-top: 4px solid var(--primary-color);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Image Rotator & Flipper Tool</h1>
+    <p class="description">Upload any image and easily rotate or flip it. Our free online tool works with JPG, PNG, GIF, and other common image formats. No registration required!</p>
+    
+    <!-- Top Ad Container -->
+    <div class="ad-container">
+      <!-- Google AdSense Ad Unit -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"></script>
+      <!-- Replace YOUR_AD_UNIT_ID with your actual AdSense ad unit ID -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+           data-ad-slot="YOUR_AD_UNIT_ID"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <div class="ad-label">Advertisement</div>
+
+    <div class="upload-section">
+      <input type="file" id="image-upload" accept="image/*" aria-label="Upload image file">
+      <p>Drag & drop an image or click to browse</p>
+    </div>
+    
+    <div class="controls">
+      <button id="rotate-left" disabled>↺ Rotate Left</button>
+      <button id="rotate-right" disabled>↻ Rotate Right</button>
+      <button id="flip-horizontal" disabled>⇆ Flip Horizontal</button>
+      <button id="flip-vertical" disabled>⇅ Flip Vertical</button>
+    </div>
+    
+    <div class="spinner" id="loading-spinner"></div>
+    
+    <div class="preview-container">
+      <div class="preview">
+        <img id="image-preview" src="" alt="Image Preview" />
+        <p class="no-image" id="no-image-message">Your edited image will appear here</p>
+      </div>
+    </div>
+    
+    <div class="download">
+      <a id="download-link" href="#" download="edited_image.jpg">
+        <button id="download-btn" disabled>Download Image</button>
+      </a>
+    </div>
+    
+    <!-- Bottom Ad Container -->
+    <div class="ad-container">
+      <!-- Google AdSense Ad Unit -->
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"></script>
+      <!-- Replace YOUR_AD_UNIT_ID with your actual AdSense ad unit ID -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+           data-ad-slot="YOUR_AD_UNIT_ID"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <div class="ad-label">Advertisement</div>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Image Rotator & Flipper Tool",
+      "description": "Free online tool to rotate and flip images instantly",
+      "url": "https://yourwebsite.com/image-rotator",
+      "applicationCategory": "ImageEditor",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+  </div>
+
+  <script>
+    // DOM Elements
+    const imagePreview = document.getElementById('image-preview');
+    const imageUpload = document.getElementById('image-upload');
+    const rotateLeftBtn = document.getElementById('rotate-left');
+    const rotateRightBtn = document.getElementById('rotate-right');
+    const flipHorizontalBtn = document.getElementById('flip-horizontal');
+    const flipVerticalBtn = document.getElementById('flip-vertical');
+    const downloadLink = document.getElementById('download-link');
+    const downloadBtn = document.getElementById('download-btn');
+    const noImageMessage = document.getElementById('no-image-message');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    
+    // State variables
+    let rotation = 0;
+    let flipHorizontal = false;
+    let flipVertical = false;
+    let originalImageData = null;
+
+    // Event Listeners
+    imageUpload.addEventListener('change', handleImageUpload);
+    rotateLeftBtn.addEventListener('click', rotateLeft);
+    rotateRightBtn.addEventListener('click', rotateRight);
+    flipHorizontalBtn.addEventListener('click', flipHorizontalImage);
+    flipVerticalBtn.addEventListener('click', flipVerticalImage);
+    
+    // Drag and drop functionality
+    const uploadSection = document.querySelector('.upload-section');
+    uploadSection.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadSection.style.borderColor = '#007bff';
+      uploadSection.style.backgroundColor = 'rgba(0, 123, 255, 0.1)';
+    });
+    
+    uploadSection.addEventListener('dragleave', () => {
+      uploadSection.style.borderColor = '#dee2e6';
+      uploadSection.style.backgroundColor = '#f8f9fa';
+    });
+    
+    uploadSection.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadSection.style.borderColor = '#dee2e6';
+      uploadSection.style.backgroundColor = '#f8f9fa';
+      
+      if (e.dataTransfer.files.length) {
+        imageUpload.files = e.dataTransfer.files;
+        handleImageUpload({ target: imageUpload });
+      }
+    });
+
+    // Functions
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        showLoading(true);
+        
+        // Validate file type
+        if (!file.type.match('image.*')) {
+          alert('Please select an image file (JPEG, PNG, GIF, etc.)');
+          showLoading(false);
+          return;
+        }
+        
+        // Validate file size (limit to 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('Image size should be less than 5MB');
+          showLoading(false);
+          return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          originalImageData = e.target.result;
+          imagePreview.src = originalImageData;
+          imagePreview.style.display = 'block';
+          noImageMessage.style.display = 'none';
+          
+          // Reset transformations
+          rotation = 0;
+          flipHorizontal = false;
+          flipVertical = false;
+          
+          // Enable buttons
+          rotateLeftBtn.disabled = false;
+          rotateRightBtn.disabled = false;
+          flipHorizontalBtn.disabled = false;
+          flipVerticalBtn.disabled = false;
+          downloadBtn.disabled = false;
+          
+          updateImage();
+          showLoading(false);
+        };
+        reader.onerror = function() {
+          alert('Error reading the image file');
+          showLoading(false);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function rotateLeft() {
+      rotation -= 90;
+      updateImage();
+    }
+
+    function rotateRight() {
+      rotation += 90;
+      updateImage();
+    }
+
+    function flipHorizontalImage() {
+      flipHorizontal = !flipHorizontal;
+      updateImage();
+    }
+
+    function flipVerticalImage() {
+      flipVertical = !flipVertical;
+      updateImage();
+    }
+
+    function updateImage() {
+      imagePreview.style.transform = `rotate(${rotation}deg)` +
+        (flipHorizontal ? ' scaleX(-1)' : '') +
+        (flipVertical ? ' scaleY(-1)' : '');
+      
+      updateDownloadLink();
+    }
+
+    function updateDownloadLink() {
+      if (!imagePreview.src) return;
+      
+      showLoading(true);
+      
+      let canvas = document.createElement('canvas');
+      let ctx = canvas.getContext('2d');
+      let img = new Image();
+      
+      img.onload = function() {
+        let w = img.width;
+        let h = img.height;
+
+        // Adjust canvas size based on rotation
+        if (Math.abs(rotation) % 180 === 90) {
+          canvas.width = h;
+          canvas.height = w;
+        } else {
+          canvas.width = w;
+          canvas.height = h;
+        }
+
+        // Apply transformations
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate(rotation * Math.PI / 180);
+        ctx.scale(flipHorizontal ? -1 : 1, flipVertical ? -1 : 1);
+        ctx.drawImage(img, -w / 2, -h / 2);
+        ctx.restore();
+
+        // Update download link
+        const timestamp = new Date().getTime();
+        const filename = `edited-image-${timestamp}.jpg`;
+        downloadLink.setAttribute('download', filename);
+        downloadLink.href = canvas.toDataURL("image/jpeg");
+        
+        showLoading(false);
+      };
+      
+      img.onerror = function() {
+        alert('Error processing the image');
+        showLoading(false);
+      };
+      
+      img.src = originalImageData;
+    }
+    
+    function showLoading(show) {
+      if (show) {
+        loadingSpinner.style.display = 'block';
+      } else {
+        loadingSpinner.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
