@@ -102,7 +102,7 @@
             margin: 30px 0;
         }
 
-        .upload-section, .preview-section, .result-section {
+        .upload-section, .preview-section, .result-section, .info-section {
             background-color: var(--secondary-color);
             border-radius: 8px;
             padding: 25px;
@@ -122,6 +122,11 @@
         h2 {
             font-size: 1.5rem;
             margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 25px 0 15px;
         }
 
         .upload-area {
@@ -254,6 +259,124 @@
             cursor: pointer;
         }
 
+        /* Additional styles for new sections */
+        .info-section {
+            margin-bottom: 30px;
+        }
+        
+        .info-section p {
+            margin-bottom: 15px;
+        }
+        
+        .info-section ul, .info-section ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .info-section li {
+            margin-bottom: 8px;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 10px 0;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .blog-post {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+        
+        .blog-post img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .blog-post-content {
+            padding: 15px;
+        }
+        
+        .blog-post h3 {
+            margin: 10px 0;
+        }
+        
+        .blog-post p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.8rem;
@@ -263,11 +386,15 @@
                 font-size: 1.3rem;
             }
             
+            h3 {
+                font-size: 1.1rem;
+            }
+            
             .tool-container {
                 gap: 20px;
             }
             
-            .upload-section, .preview-section, .result-section {
+            .upload-section, .preview-section, .result-section, .info-section {
                 padding: 20px 15px;
             }
             
@@ -299,6 +426,10 @@
             nav ul li {
                 margin: 10px 0;
                 margin-left: 0;
+            }
+            
+            .blog-posts {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -338,11 +469,11 @@
                 <nav>
                     <ul id="navMenu">
                         <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
-                        <li><a href="blog.html"><i class="fas fa-blog"></i> Blog</a></li>
-                        <li><a href="privacy.html"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-                        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                        <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                        <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="#blog"><i class="fas fa-blog"></i> Blog</a></li>
+                        <li><a href="#privacy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                        <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
                     </ul>
                 </nav>
             </div>
@@ -413,161 +544,79 @@
             </section>
         </div>
 
-        <div class="ad-container">
-            <!-- AdSense Footer Ad -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                 data-ad-slot="YOUR_AD_SLOT_ID"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="blog.html">Blog</a>
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="contact.html">Contact Us</a>
-                <a href="faq.html">FAQ</a>
-            </div>
-            <p>&copy; 2023 Multi-Tool Website. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const navMenu = document.getElementById('navMenu');
+        <!-- About Us Section -->
+        <section id="about" class="info-section">
+            <h2>About Us</h2>
+            <p>Welcome to Multi-Tool Website, your one-stop destination for free, easy-to-use online tools designed to make your digital life simpler. Our mission is to provide high-quality, accessible tools that help you with everyday tasks without any hassle.</p>
             
-            mobileMenuBtn.addEventListener('click', () => {
-                navMenu.classList.toggle('show');
-            });
+            <h3>Our Story</h3>
+            <p>Founded in 2023, Multi-Tool Website started as a small project to help people convert images to text easily. Since then, we've grown to offer a variety of tools that cater to different needs, all while maintaining our commitment to simplicity and user-friendliness.</p>
+            
+            <h3>Our Team</h3>
+            <p>We're a passionate group of developers, designers, and tech enthusiasts dedicated to creating tools that solve real problems. Our team works tirelessly to ensure our tools are reliable, fast, and free for everyone to use.</p>
+            
+            <h3>Why Choose Us?</h3>
+            <ul>
+                <li><strong>Free Tools:</strong> All our tools are completely free to use with no hidden charges.</li>
+                <li><strong>No Registration Required:</strong> Use our tools instantly without signing up.</li>
+                <li><strong>Privacy Focused:</strong> We respect your privacy - your files are processed in your browser and never uploaded to our servers.</li>
+                <li><strong>Regular Updates:</strong> We continuously improve our tools based on user feedback.</li>
+            </ul>
+        </section>
 
-            // Tool functionality
-            const fileInput = document.getElementById('fileInput');
-            const uploadArea = document.getElementById('uploadArea');
-            const imagePreview = document.getElementById('imagePreview');
-            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-            const extractBtn = document.getElementById('extractBtn');
-            const textResult = document.getElementById('textResult');
-            const copyBtn = document.getElementById('copyBtn');
-            const clearBtn = document.getElementById('clearBtn');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-
-            let currentFile = null;
-
-            // Handle drag and drop
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.style.backgroundColor = 'rgba(30, 144, 255, 0.1)';
-            });
-
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.style.backgroundColor = '';
-            });
-
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.style.backgroundColor = '';
-                if (e.dataTransfer.files.length) {
-                    handleFile(e.dataTransfer.files[0]);
-                }
-            });
-
-            // Handle click to browse
-            uploadArea.addEventListener('click', () => {
-                fileInput.click();
-            });
-
-            fileInput.addEventListener('change', () => {
-                if (fileInput.files.length) {
-                    handleFile(fileInput.files[0]);
-                }
-            });
-
-            // Handle file processing
-            function handleFile(file) {
-                if (!file.type.match('image.*')) {
-                    alert('Please select an image file (JPEG, PNG, etc.)');
-                    return;
-                }
-
-                currentFile = file;
+        <!-- Blog Section -->
+        <section id="blog" class="info-section">
+            <h2>Latest From Our Blog</h2>
+            <p>Stay updated with the latest tips, tricks, and news about our tools and technology in general.</p>
+            
+            <div class="blog-posts">
+                <article class="blog-post">
+                    <img src="https://via.placeholder.com/400x200?text=OCR+Technology" alt="OCR Technology">
+                    <div class="blog-post-content">
+                        <h3>The Power of OCR Technology</h3>
+                        <p>Discover how Optical Character Recognition is revolutionizing the way we extract text from images and documents.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
                 
-                // Display preview
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                    imagePreviewContainer.querySelector('p').style.display = 'none';
-                    extractBtn.disabled = false;
-                };
-                reader.readAsDataURL(file);
-            }
-
-            // Extract text from image
-            extractBtn.addEventListener('click', async () => {
-                if (!currentFile) return;
-
-                loadingIndicator.style.display = 'block';
-                textResult.value = '';
-                extractBtn.disabled = true;
-
-                try {
-                    const { data: { text } } = await Tesseract.recognize(
-                        currentFile,
-                        'eng',
-                        { logger: m => console.log(m) }
-                    );
-
-                    textResult.value = text.trim();
-                    copyBtn.disabled = false;
-                } catch (error) {
-                    console.error('Error during OCR:', error);
-                    textResult.value = 'Error extracting text. Please try another image.';
-                } finally {
-                    loadingIndicator.style.display = 'none';
-                    extractBtn.disabled = false;
-                }
-            });
-
-            // Copy text to clipboard
-            copyBtn.addEventListener('click', () => {
-                textResult.select();
-                document.execCommand('copy');
+                <article class="blog-post">
+                    <img src="https://via.placeholder.com/400x200?text=Productivity+Tips" alt="Productivity Tips">
+                    <div class="blog-post-content">
+                        <h3>5 Ways Our Tools Can Boost Your Productivity</h3>
+                        <p>Learn how to save time and work more efficiently with our collection of online tools.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
                 
-                // Change button text temporarily
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                }, 2000);
-            });
+                <article class="blog-post">
+                    <img src="https://via.placeholder.com/400x200?text=Tech+Updates" alt="Tech Updates">
+                    <div class="blog-post-content">
+                        <h3>Upcoming Features You'll Love</h3>
+                        <p>Get a sneak peek at the exciting new tools and features we're working on for our users.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-            // Clear all
-            clearBtn.addEventListener('click', () => {
-                currentFile = null;
-                fileInput.value = '';
-                imagePreview.src = '';
-                imagePreview.style.display = 'none';
-                imagePreviewContainer.querySelector('p').style.display = 'block';
-                textResult.value = '';
-                extractBtn.disabled = true;
-                copyBtn.disabled = true;
-            });
-
-            // Initialize AdSense
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        });
-    </script>
-</body>
-    </html>
+        <!-- Privacy Policy Section -->
+        <section id="privacy" class="info-section">
+            <h2>Privacy Policy</h2>
+            <p>Last Updated: January 1, 2023</p>
+            
+            <p>At Multi-Tool Website, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our services.</p>
+            
+            <h3>Information We Collect</h3>
+            <p>Our image to text tool processes your images entirely in your browser. We do not upload your images to our servers or store them in any way. The only information we may collect includes:</p>
+            <ul>
+                <li>Basic usage statistics (which features are used most frequently)</li>
+                <li>Anonymous analytics data to improve our service</li>
+                <li>Information provided voluntarily through contact forms</li>
+            </ul>
+            
+            <h3>How We Use Your Information</h3>
+            <p>Any information we collect is used solely to:</p>
+            <ul>
+                <li>Improve our tools and user experience</li>
+                <li>Respond to customer inquiries</li>
+                <li>Understand usage patterns to prioritize developme
