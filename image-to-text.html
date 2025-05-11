@@ -3,221 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online tool to extract text from images quickly. Convert images to editable text with our OCR technology. Works on mobile and desktop.">
-    <meta name="keywords" content="image to text, OCR, text extractor, extract text from image, online tool">
-    <meta name="author" content="Multi-Tool Website">
-    <title>Fast Image to Text Extractor | Multi-Tool Website</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID" crossorigin="anonymous"></script>
+    <meta name="description" content="Free online OCR tool to extract text from images. Convert images to editable text instantly with our powerful image to text converter.">
+    <meta name="keywords" content="OCR, image to text, extract text from image, online text converter, image scanner">
+    <title>Image to Text Converter | Free Online OCR Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <style>
         :root {
-            --primary-color: #1e90ff;
-            --secondary-color: #ffffff;
-            --accent-color: #0077cc;
-            --text-color: #333333;
-            --light-gray: #f5f5f5;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --primary-color: #0077ff;
+            --primary-light: #e6f2ff;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
+            --shadow: 0 4px 12px rgba(0, 119, 255, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            padding: 1rem 0;
-            box-shadow: var(--shadow);
-        }
-
-        .header-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 20px;
-        }
-
-        nav ul li a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.3s;
-        }
-
-        nav ul li a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        .header-text {
-            text-align: center;
-            padding: 20px 0;
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
         }
 
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        .ad-container {
-            background-color: var(--light-gray);
-            padding: 10px;
-            margin: 20px 0;
-            text-align: center;
-            border-radius: 5px;
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .tool-container {
+        .navbar {
             display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin: 30px 0;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
         }
 
-        .upload-section, .preview-section, .result-section, .info-section {
-            background-color: var(--secondary-color);
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid #e0e0e0;
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
         }
 
-        h1, h2, h3 {
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
             color: var(--primary-color);
         }
 
-        h1 {
-            font-size: 2.2rem;
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .ad-banner {
+            background-color: var(--white);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .ad-banner p {
+            color: var(--medium-gray);
             margin-bottom: 10px;
         }
 
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+        .tool-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
         }
 
-        h3 {
-            font-size: 1.3rem;
-            margin: 25px 0 15px;
-        }
-
-        .upload-area {
-            border: 2px dashed var(--primary-color);
-            border-radius: 8px;
-            padding: 40px 20px;
+        .tool-header {
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tool-header h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--medium-gray);
+        }
+
+        .ocr-tool {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .upload-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-light);
+            transition: var(--transition);
             cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
+            position: relative;
         }
 
-        .upload-area:hover {
-            background-color: rgba(30, 144, 255, 0.05);
+        .upload-section:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(0, 119, 255, 0.05);
         }
 
-        .upload-area i {
-            font-size: 3rem;
+        .upload-section i {
+            font-size: 48px;
             color: var(--primary-color);
             margin-bottom: 15px;
         }
 
-        .btn {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-block;
-            margin-top: 15px;
+        .upload-section h3 {
+            margin-bottom: 10px;
+            color: var(--dark-gray);
         }
 
-        .btn:hover {
-            background-color: var(--accent-color);
+        .upload-section p {
+            color: var(--medium-gray);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .upload-btn:hover {
+            background-color: #0066dd;
             transform: translateY(-2px);
         }
 
-        .btn:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            transform: none;
+        .upload-btn i {
+            font-size: 16px;
+            margin-right: 8px;
+            color: var(--white);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .preview-section {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .preview-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .image-preview {
-            max-width: 100%;
-            max-height: 400px;
-            margin: 20px auto;
-            display: block;
-            border-radius: 5px;
+            flex: 1;
+            min-width: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
             box-shadow: var(--shadow);
         }
 
-        .text-result {
+        .image-preview img {
             width: 100%;
-            min-height: 200px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            line-height: 1.6;
-            resize: vertical;
+            height: auto;
+            display: block;
+        }
+
+        .text-result {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .text-result h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .text-output {
             background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
         }
 
-        .copy-btn {
-            background-color: #4CAF50;
-            margin-left: 10px;
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .copy-btn:hover {
-            background-color: #3e8e41;
+        .action-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid var(--primary-color);
         }
 
-        .loading {
-            display: none;
+        .action-btn i {
+            margin-right: 8px;
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 2px solid var(--primary-color);
+        }
+
+        .primary-btn:hover {
+            background-color: #0066dd;
+            border-color: #0066dd;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .language-select {
+            padding: 8px 15px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .features {
+            padding: 60px 0;
+        }
+
+        .section-header {
             text-align: center;
-            margin: 20px 0;
+            margin-bottom: 40px;
         }
 
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top: 4px solid var(--primary-color);
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--medium-gray);
+            max-width: 700px;
             margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+
+        .feature-card p {
+            color: var(--medium-gray);
+        }
+
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 4px solid var(--primary-light);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
@@ -225,398 +469,215 @@
             100% { transform: rotate(360deg); }
         }
 
-        footer {
-            background-color: var(--primary-color);
-            color: var(--secondary-color);
+        /* Progress indicator */
+        .progress-container {
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
+            margin-top: 10px;
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
+        .progress-text {
+            font-size: 14px;
+            color: var(--medium-gray);
         }
 
-        .footer-links a {
-            color: var(--secondary-color);
-            margin: 0 15px;
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--secondary-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Additional styles for new sections */
-        .info-section {
-            margin-bottom: 30px;
-        }
-        
-        .info-section p {
-            margin-bottom: 15px;
-        }
-        
-        .info-section ul, .info-section ol {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .info-section li {
-            margin-bottom: 8px;
-        }
-        
-        .faq-item {
-            margin-bottom: 20px;
-        }
-        
-        .faq-question {
-            font-weight: bold;
-            color: var(--primary-color);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .faq-answer {
-            padding: 10px 0;
-            display: none;
-        }
-        
-        .faq-answer.show {
-            display: block;
-        }
-        
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        
-        .form-group input, 
-        .form-group textarea, 
-        .form-group select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        .blog-posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-        
-        .blog-post {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            transition: transform 0.3s;
-        }
-        
-        .blog-post:hover {
-            transform: translateY(-5px);
-        }
-        
-        .blog-post img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .blog-post-content {
-            padding: 15px;
-        }
-        
-        .blog-post h3 {
-            margin: 10px 0;
-        }
-        
-        .blog-post p {
-            margin-bottom: 15px;
-            color: #555;
-        }
-        
-        .read-more {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .read-more:hover {
-            text-decoration: underline;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
         }
 
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Mobile styles */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8rem;
+            .navbar {
+                padding: 15px;
             }
-            
-            h2 {
-                font-size: 1.3rem;
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 30px;
+                transition: var(--transition);
             }
-            
-            h3 {
-                font-size: 1.1rem;
+
+            .nav-links.active {
+                left: 0;
             }
-            
-            .tool-container {
-                gap: 20px;
-            }
-            
-            .upload-section, .preview-section, .result-section, .info-section {
-                padding: 20px 15px;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
+
+            .nav-links li {
+                margin: 15px 0;
             }
 
             .mobile-menu-btn {
                 display: block;
             }
 
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background-color: var(--primary-color);
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .tool-container {
                 padding: 20px;
-                z-index: 100;
             }
 
-            nav ul.show {
-                display: flex;
+            .preview-row {
+                flex-direction: column;
             }
 
-            nav ul li {
-                margin: 10px 0;
-                margin-left: 0;
+            .image-preview, .text-result {
+                min-width: 100%;
             }
-            
-            .blog-posts {
+
+            .features-grid {
                 grid-template-columns: 1fr;
             }
         }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .upload-area {
-                padding: 30px 15px;
-            }
-            
-            .upload-area i {
-                font-size: 2.5rem;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .footer-links a {
-                margin: 5px 0;
-            }
-        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="container header-content">
-            <div class="nav-container">
-                <div class="logo">Multi-Tool</div>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-cubes"></i>
+                    <span>MultiTools</span>
+                </a>
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
-                <nav>
-                    <ul id="navMenu">
-                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#about"><i class="fas fa-info-circle"></i> About Us</a></li>
-                        <li><a href="#blog"><i class="fas fa-blog"></i> Blog</a></li>
-                        <li><a href="#privacy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-                        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                        <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="header-text">
-                <h1>Image to Text Extractor</h1>
-                <p>Quickly extract text from any image with our free online tool</p>
-            </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about-us.html">About us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="privacy-policy.html">Privacy policy</a></li>
+                    <li><a href="contact-us.html">Contact us</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <main class="container">
-        <div class="ad-container">
-            <!-- AdSense Header Ad -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                 data-ad-slot="YOUR_AD_SLOT_ID"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-
-        <div class="tool-container">
-            <section class="upload-section">
-                <h2>Upload Your Image</h2>
-                <p>Drag & drop an image file or click to browse</p>
-                <div id="uploadArea" class="upload-area">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Select or drag an image file here</p>
-                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                </div>
-                <button id="extractBtn" class="btn" disabled>Extract Text</button>
-            </section>
-
-            <div class="ad-container">
-                <!-- AdSense Mid-Content Ad -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                     data-ad-slot="YOUR_AD_SLOT_ID"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-
-            <section class="preview-section">
-                <h2>Image Preview</h2>
-                <div id="imagePreviewContainer">
-                    <p>Your uploaded image will appear here</p>
-                    <img id="imagePreview" class="image-preview" style="display: none;">
-                </div>
-            </section>
-
-            <div class="loading" id="loadingIndicator">
-                <div class="spinner"></div>
-                <p>Extracting text from image...</p>
-            </div>
-
-            <section class="result-section">
-                <h2>Extracted Text</h2>
-                <textarea id="textResult" class="text-result" readonly placeholder="Extracted text will appear here..."></textarea>
-                <button id="copyBtn" class="btn copy-btn" disabled><i class="fas fa-copy"></i> Copy Text</button>
-                <button id="clearBtn" class="btn" style="background-color: #f44336;"><i class="fas fa-trash-alt"></i> Clear All</button>
-            </section>
-        </div>
-
-        <!-- About Us Section -->
-        <section id="about" class="info-section">
-            <h2>About Us</h2>
-            <p>Welcome to Multi-Tool Website, your one-stop destination for free, easy-to-use online tools designed to make your digital life simpler. Our mission is to provide high-quality, accessible tools that help you with everyday tasks without any hassle.</p>
-            
-            <h3>Our Story</h3>
-            <p>Founded in 2023, Multi-Tool Website started as a small project to help people convert images to text easily. Since then, we've grown to offer a variety of tools that cater to different needs, all while maintaining our commitment to simplicity and user-friendliness.</p>
-            
-            <h3>Our Team</h3>
-            <p>We're a passionate group of developers, designers, and tech enthusiasts dedicated to creating tools that solve real problems. Our team works tirelessly to ensure our tools are reliable, fast, and free for everyone to use.</p>
-            
-            <h3>Why Choose Us?</h3>
-            <ul>
-                <li><strong>Free Tools:</strong> All our tools are completely free to use with no hidden charges.</li>
-                <li><strong>No Registration Required:</strong> Use our tools instantly without signing up.</li>
-                <li><strong>Privacy Focused:</strong> We respect your privacy - your files are processed in your browser and never uploaded to our servers.</li>
-                <li><strong>Regular Updates:</strong> We continuously improve our tools based on user feedback.</li>
-            </ul>
-        </section>
-
-        <!-- Blog Section -->
-        <section id="blog" class="info-section">
-            <h2>Latest From Our Blog</h2>
-            <p>Stay updated with the latest tips, tricks, and news about our tools and technology in general.</p>
-            
-            <div class="blog-posts">
-                <article class="blog-post">
-                    <img src="https://via.placeholder.com/400x200?text=OCR+Technology" alt="OCR Technology">
-                    <div class="blog-post-content">
-                        <h3>The Power of OCR Technology</h3>
-                        <p>Discover how Optical Character Recognition is revolutionizing the way we extract text from images and documents.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </article>
-                
-                <article class="blog-post">
-                    <img src="https://via.placeholder.com/400x200?text=Productivity+Tips" alt="Productivity Tips">
-                    <div class="blog-post-content">
-                        <h3>5 Ways Our Tools Can Boost Your Productivity</h3>
-                        <p>Learn how to save time and work more efficiently with our collection of online tools.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </article>
-                
-                <article class="blog-post">
-                    <img src="https://via.placeholder.com/400x200?text=Tech+Updates" alt="Tech Updates">
-                    <div class="blog-post-content">
-                        <h3>Upcoming Features You'll Love</h3>
-                        <p>Get a sneak peek at the exciting new tools and features we're working on for our users.</p>
-                        <a href="#" class="read-more">Read More →</a>
-                    </div>
-                </article>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Image to Text Converter</h1>
+                <p>Extract text from any image with our free online OCR tool. Simply upload your image and get editable text in seconds.</p>
             </div>
         </section>
 
-        <!-- Privacy Policy Section -->
-        <section id="privacy" class="info-section">
-            <h2>Privacy Policy</h2>
-            <p>Last Updated: January 1, 2023</p>
-            
-            <p>At Multi-Tool Website, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our services.</p>
-            
-            <h3>Information We Collect</h3>
-            <p>Our image to text tool processes your images entirely in your browser. We do not upload your images to our servers or store them in any way. The only information we may collect includes:</p>
-            <ul>
-                <li>Basic usage statistics (which features are used most frequently)</li>
-                <li>Anonymous analytics data to improve our service</li>
-                <li>Information provided voluntarily through contact forms</li>
-            </ul>
-            
-            <h3>How We Use Your Information</h3>
-            <p>Any information we collect is used solely to:</p>
-            <ul>
-                <li>Improve our tools and user experience</li>
-                <li>Respond to customer inquiries</li>
-                <li>Understand usage patterns to prioritize developme
+        <div class="container">
+            <div class="ad-banner">
+                <p>Advertisement</p>
+                <!-- Replace with your Google AdSense code -->
+                <div id="ad-top">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                            crossorigin="anonymous"></script>
+                    <!-- OCR Tool Top Banner -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                         data-ad-slot="YOUR_AD_SLOT_ID"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h2>Extract Text from Image</h2>
+                    <p>Upload an image containing text and our OCR tool will convert it to editable text for you</p>
+                    <select id="languageSelect" class="language-select">
+                        <option value="eng">English</option>
+                        <option value="spa">Spanish</option>
+                        <option value="fra">French</option>
+                        <option value="deu">German</option>
+                        <option value="ita">Italian</option>
+                        <option value="por">Portuguese</option>
+                        <option value="rus">Russian</option>
+                        <option value="chi_sim">Chinese (Simplified)</option>
+                        <option value="jpn">Japanese</option>
+                        <option value="kor">Korean</option>
+                    </select>
+                </div>
+
+                <div class="ocr-tool">
+                    <div class="upload-section" id="uploadSection">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Upload Your Image</h3>
+                        <p>Drag & drop your image here or click to browse files</p>
+                        <p>Supported formats: JPG, PNG, GIF, BMP</p>
+                        <button class="upload-btn" id="uploadBtn">
+                            <i class="fas fa-upload"></i> Choose Image
+                        </button>
+                        <input type="file" id="fileInput" accept="image/*">
+                    </div>
+
+                    <div class="spinner" id="spinner"></div>
+                    <div class="progress-container">
+                        <div class="progress-text" id="progressText"></div>
+                    </div>
+
+                    <div class="preview-section" id="previewSection">
+                        <div class="preview-row">
+                            <div class="image-preview">
+                                <img id="imagePreview" src="" alt="Uploaded image preview">
+                            </div>
+                            <div class="text-result">
+                                <h3>Extracted Text</h3>
+                                <div class="text-output" id="textOutput">
+                                    Text will appear here after processing...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn primary-btn" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Text
+                            </button>
+                            <button class="action-btn primary-btn" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download Text
+                            </button>
+                            <button class="action-btn secondary-btn" id="clearBtn">
+                                <i class="fas fa-trash-alt"></i> Clear All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-banner">
+                <p>Advertisement</p>
+                <!-- Replace with your Google AdSense code -->
+                <div id="ad-middle">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                            crossorigin="anonymous"></script>
+                    <!-- OCR Tool Middle Banner -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+  
