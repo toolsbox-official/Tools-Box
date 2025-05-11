@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online OCR tool to extract text from images. Convert images to editable text instantly with our powerful image to text converter.">
+    <meta name="keywords" content="OCR, image to text, extract text from image, online text converter, image scanner">
+    <title>Image to Text Converter | Free Online OCR Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #0077ff;
+            --primary-light: #e6f2ff;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
+            --shadow: 0 4px 12px rgba(0, 119, 255, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .ad-banner {
+            background-color: var(--white);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .ad-banner p {
+            color: var(--medium-gray);
+            margin-bottom: 10px;
+        }
+
+        .tool-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tool-header h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--medium-gray);
+        }
+
+        .ocr-tool {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .upload-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-light);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-section:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(0, 119, 255, 0.05);
+        }
+
+        .upload-section i {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .upload-section h3 {
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+
+        .upload-section p {
+            color: var(--medium-gray);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .upload-btn:hover {
+            background-color: #0066dd;
+            transform: translateY(-2px);
+        }
+
+        .upload-btn i {
+            font-size: 16px;
+            margin-right: 8px;
+            color: var(--white);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .preview-section {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .preview-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .image-preview {
+            flex: 1;
+            min-width: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .text-result {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .text-result h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .text-output {
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid var(--primary-color);
+        }
+
+        .action-btn i {
+            margin-right: 8px;
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 2px solid var(--primary-color);
+        }
+
+        .primary-btn:hover {
+            background-color: #0066dd;
+            border-color: #0066dd;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .language-select {
+            padding: 8px 15px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .features {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+
+        .feature-card p {
+            color: var(--medium-gray);
+        }
+
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 4px solid var(--primary-light);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress indicator */
+        .progress-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--medium-gray);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 30px;
+                transition: var(--transition);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .tool-container {
+                padding: 20px;
+            }
+
+            .preview-row {
+                flex-direction: column;
+            }
+
+            .image-preview, .text-result {
+                min-width: 100%;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-cubes"></i>
+                    <span>MultiTools</span>
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about-us.html">About us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="privacy-policy.html">Privacy policy</a></li>
+                    <li><a href="contact-us.html">Contact us</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Image to Text Converter</h1>
+                <p>Extract text from any image with our free online OCR tool. Simply upload your image and get editable text in seconds.</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="ad-banner">
+                <p>Advertisement</p>
+                <!-- Replace with your Google AdSense code -->
+                <div id="ad-top">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                            crossorigin="anonymous"></script>
+                    <!-- OCR Tool Top Banner -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                         data-ad-slot="YOUR_AD_SLOT_ID"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+
+            <div class="tool-container">
+                <div class="tool-header">
+                    <h2>Extract Text from Image</h2>
+                    <p>Upload an image containing text and our OCR tool will convert it to editable text for you</p>
+                    <select id="languageSelect" class="language-select">
+                        <option value="eng">English</option>
+                        <option value="spa">Spanish</option>
+                        <option value="fra">French</option>
+                        <option value="deu">German</option>
+                        <option value="ita">Italian</option>
+                        <option value="por">Portuguese</option>
+                        <option value="rus">Russian</option>
+                        <option value="chi_sim">Chinese (Simplified)</option>
+                        <option value="jpn">Japanese</option>
+                        <option value="kor">Korean</option>
+                    </select>
+                </div>
+
+                <div class="ocr-tool">
+                    <div class="upload-section" id="uploadSection">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Upload Your Image</h3>
+                        <p>Drag & drop your image here or click to browse files</p>
+                        <p>Supported formats: JPG, PNG, GIF, BMP</p>
+                        <button class="upload-btn" id="uploadBtn">
+                            <i class="fas fa-upload"></i> Choose Image
+                        </button>
+                        <input type="file" id="fileInput" accept="image/*">
+                    </div>
+
+                    <div class="spinner" id="spinner"></div>
+                    <div class="progress-container">
+                        <div class="progress-text" id="progressText"></div>
+                    </div>
+
+                    <div class="preview-section" id="previewSection">
+                        <div class="preview-row">
+                            <div class="image-preview">
+                                <img id="imagePreview" src="" alt="Uploaded image preview">
+                            </div>
+                            <div class="text-result">
+                                <h3>Extracted Text</h3>
+                                <div class="text-output" id="textOutput">
+                                    Text will appear here after processing...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn primary-btn" id="copyBtn">
+                                <i class="fas fa-copy"></i> Copy Text
+                            </button>
+                            <button class="action-btn primary-btn" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download Text
+                            </button>
+                            <button class="action-btn secondary-btn" id="clearBtn">
+                                <i class="fas fa-trash-alt"></i> Clear All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-banner">
+                <p>Advertisement</p>
+                <!-- Replace with your Google AdSense code -->
+                <div id="ad-middle">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                            crossorigin="anonymous"></script>
+                    <!-- OCR Tool Middle Banner -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                         data-ad-slot="YOUR_AD_SLOT_ID"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+
+            <section class="features">
+                <div class="section-header">
+                    <h2>Why Use Our Image to Text Tool?</h2>
+                    <p>Our OCR converter offers powerful features to make text extraction simple and efficient</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Fast Processing</h3>
+                        <p>Extract text from images in seconds with our optimized OCR technology.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Works perfectly on all devices - smartphones, tablets, and computers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Secure Processing</h3>
+                        <p>Your files are processed securely and never stored on our servers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3>Multiple Languages</h3>
+                        <p>Supports text extraction from over 50 languages including English, Spanish, French, and more.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3>Cloud-Based</h3>
+                        <p>No software installation required. Works directly in your browser.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <h3>Completely Free</h3>
+                        <p>100% free to use with no hidden charges or limitations.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>MultiTools</h3>
+                    <p>Your all-in-one solution for online tools. We provide free, easy-to-use tools to make your digital life easier.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Popular Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Image to Text</a></li>
+                        <li><a href="#">PDF Converter</a></li>
+                        <li><a href="#">Password Generator</a></li>
+                        <li><a href="#">QR Code Generator</a></li>
+                        <li><a href="#">Word Counter</a></li>
+                        <li><a href="#">Color Picker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> support@multitools.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Tool Street, Digital City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 MultiTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // OCR Tool Functionality
+        const uploadSection = document.getElementById('uploadSection');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const previewSection = document.getElementById('previewSection');
+        const imagePreview = document.getElementById('imagePreview');
+        const textOutput = document.getElementById('textOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const spinner = document.getElementById('spinner');
+        const progressText = document.getElementById('progressText');
+        const toast = document.getElementById('toast');
+        const languageSelect = document.getElementById('languageSelect');
+
+        // Handle drag and drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadSection.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadSection.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadSection.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            uploadSection.style.borderColor = 'var(--primary-color)';
+            uploadSection.style.backgroundColor = 'rgba(0, 119, 255, 0.05)';
+        }
+
+        function unhighlight() {
+            uploadSection.style.borderColor = '#ccc';
+            uploadSection.style.backgroundColor = 'var(--primary-light)';
+        }
+
+        // Handle dropped files
+        uploadSection.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length) {
+                handleFiles(files);
+            }
+        }
+
+        // Handle file selection via button
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                handleFiles(fileInput.files);
+            }
+        });
+
+        // Process selected files
+        function handleFiles(files) {
+            const file = files[0];
+            
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                showToast('Please upload an image file (JPG, PNG, GIF, BMP)');
+                return;
+            }
+            
+            // Validate file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Image too large. Please use images under 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                uploadSection.style.display = 'none';
+                spinner.style.display = 'block';
+                progressText.textContent = '0%';
+                
+                // Process image with Tesseract.js
+                processImageWithOCR(e.target.result, languageSelect.value);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Process image with Tesseract OCR
+        async function processImageWithOCR(imageData, language) {
+            try {
+                const { data: { text } } = await Tesseract.recognize(
+                    imageData,
+                    language,
+                    {
+                        logger: progress => {
+                            if (progress.status === 'recognizing text') {
+                                const percent = Math.round(progress.progress * 100);
+                                progressText.textContent = `${percent}%`;
+                            }
+                        }
+                    }
+                );
+                
+                spinner.style.display = 'none';
+                progressText.textContent = '';
+                textOutput.textContent = text;
+                previewSection.style.display = 'flex';
+                showToast('Text extraction completed!');
+                
+            } catch (error) {
+                console.error('OCR Error:', error);
+                showToast('Error processing image. Please try another.');
+                spinner.style.display = 'none';
+                progressText.textContent = '';
+                uploadSection.style.display = 'flex';
+            }
+        }
+
+        // Copy text to clipboard
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(textOutput.textContent)
+                .then(() => {
+                    showToast('Text copied to clipboard!');
+                })
+                .catch(err => {
+                    showToast('Failed to copy text');
+                    console.error('Failed to copy text: ', err);
+                });
+        });
+
+        // Download text as file
+        downloadBtn.addEventListener('click', () => {
+            const blob = new Blob([textOutput.textContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'extracted-text.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Text downloaded!');
+        });
+
+        // Clear all
+        clearBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            imagePreview.src = '';
+            textOutput.textContent = 'Text will appear here after processing...';
+            previewSection.style.display = 'none';
+            uploadSection.style.display = 'flex';
+            progressText.textContent = '';
+        });
+
+        // Show toast notification
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize Google AdSense (replace with your actual publisher ID)
+        // window.onload = function() {
+        //     if (typeof adsbygoogle !== 'undefined') {
+        //         (adsbygoogle = window.adsbygoogle || []).push({});
+        //     }
+        // };
+    </script>
+</body>
+</html>
